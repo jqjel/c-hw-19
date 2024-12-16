@@ -1,0 +1,39 @@
+
+// Driver program to select rovers for a mission
+int main() {
+
+  // Create an empty vector of rovers
+  vector<Rover> fleet;
+
+  // Create an input file stream to a file with rover data
+  ifstream roversInput("rover_data.txt");
+  
+  // check if the file was opened; end program if not
+  if(!roversInput.is_open()) {
+    cout << "ERROR READING ROVERS DATA FILE" << endl;
+    return 1;
+  }
+
+  // Load a set of rovers from a file into fleet
+  loadRovers(fleet, roversInput);
+
+  // Close the file
+  roversInput.close();
+
+  // Print the values of this fleet
+  cout << "This is what is in fleet: " << endl;
+  printFleet(fleet,cout);
+
+  // ---- Test desirability helper function ---- //
+
+  // Special Case: charge = 1.0 (fully charged)
+  Rover testRover = {1, "test", 1.0, 100, false};
+  cout << "desirability of test rover: " ;
+  cout << desirability(testRover) << endl; // should print 1000
+
+  // General Case: charge <= 0.9
+  cout << "desirability of second rover in fleet: " ;
+  cout << desirability(fleet.at(1)) << endl; // should print 250
+  cout << desirability(fleet.at(4)) << endl;
+  printRover(testRover,cout);
+}
